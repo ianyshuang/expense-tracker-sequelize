@@ -32,18 +32,26 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride("_method"))
 app.use(flash())
 
+// 設定 session & passport
+app.use(session({
+  secret: 'any string',
+  resave: 'false',
+  saveUninitialized: 'false',
+}))
+app.use(passport.initialize())
+app.use(passport.session())
+require('./config/passport')(passport)
 
 
-
-// // 將 template 會用到的資料放進 res.locals
-// app.use((req, res, next) => {
-//   res.locals.user = req.user
-//   res.locals.isAuthenticated = req.isAuthenticated()
-//   res.locals.success_msg = req.flash('success_msg')
-//   res.locals.warning_msg = req.flash('warning_msg')
-//   res.locals.error_msg = req.flash('error_msg')
-//   next()
-// })
+// 將 template 會用到的資料放進 res.locals
+app.use((req, res, next) => {
+  res.locals.user = req.user
+  // res.locals.isAuthenticated = req.isAuthenticated()
+  // res.locals.success_msg = req.flash('success_msg')
+  // res.locals.warning_msg = req.flash('warning_msg')
+  // res.locals.error_msg = req.flash('error_msg')
+  next()
+})
 
 // 路由
 app.use('/', require('./routes/home'))
