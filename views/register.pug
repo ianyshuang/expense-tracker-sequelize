@@ -1,0 +1,36 @@
+extends template/layout.pug
+
+block content
+  div(id="login-bg")
+  div(class="row mt-5")
+    div(class="col-md-4 col-3 mx-auto mt-4")
+      div(class="card card-body")
+        h1(class="text-center mb-3") 註冊帳號
+        //- include include/message.pug
+        form(action="/user/register" method="POST" onsubmit="return checkSubmit()")
+          div(class="form-group")
+            label(for="name") 姓名
+            input(class="form-control" type="name" id="name" name="name" placeholder="Enter name")
+            div
+          div(class="form-group")
+            label(for="email") Email
+            input(class="form-control" type="eamil" id="email" name="email" placeholder="Enter email")
+            div
+          div(class="form-group")
+            label(for="password") 密碼
+            input(class="form-control" type="password" id="password" name="password" placeholder="Enter password")
+            div
+          div(class="form-group")
+            label(for="password2") 確認密碼
+            input(class="form-control" type="password" id="password2" name="password2" placeholder="Enter password again")
+            div
+            
+          button(type="submit" class="btn btn-primary btn-block") 註冊
+          
+        p(class="mt-4") 
+          span 已有帳號？
+          | 
+          a(href="/user/login") 立即登入
+
+append script
+  script(src="/js/registerValidate.js")

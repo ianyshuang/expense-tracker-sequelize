@@ -1,0 +1,59 @@
+extends template/layout.pug
+
+block content 
+  - const monthList = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月']
+  - const categoryList = ['家居物業','交通出行','休閒娛樂','餐飲食品','其他']
+  div(class="container mt-5")
+    div(class="row justify-content-center")
+      div(class="col-6 col-md-8" id="main-panel")
+        form(class="d-flex flex-row" id="select-bar" action="/filter" method="POST")
+          select(class="px-2 py-3 col-3 mr-3" id="select-month" name="month" onchange="form.submit()")
+            option(value="" selected disabled) 月份
+            for month, index in monthList
+              if index+1 == monthSelected
+                option(value=`${index+1}` selected) #{month}
+              else
+                option(value=`${index+1}`) #{month}
+          select(class="px-2 py-3 col-3 mr-3" id="select-category" name="category" onchange="form.submit()")
+            option(value="" selected disabled) 類別
+            for category in categoryList
+              if category === categorySelected
+                option(value=`${category}` selected) #{category}
+              else
+                option(value=`${category}`) #{category}
+          
+        div(id="amount-panel" class="d-flex flex-row mt-5")
+          div(class="col-2")
+            span 總金額： 
+          div(class="col-5 text-center")
+            h2(class="amount-title") #{totalAmount}
+        
+        div(id="record-panel" class="mt-3")
+          for record in records
+            div(class="record d-flex")
+              div(class="record-detail col-7 py-2 d-flex")
+                div(class="d-flex col-2 align-items-center")
+                  if record.category == '餐飲食品'
+                    i(class="fas fa-utensils")
+                  if record.category == '休閒娛樂'
+                    i(class="fas fa-grin-beam")
+                  if record.category == '家居物業'
+                    i(class="fas fa-home")
+                  if record.category == '交通出行'
+                    i(class="fas fa-shuttle-van")
+                  if record.category == '其他'
+                    i(class="fas fa-pen")
+                div(class="record-info d-flex flex-column col-8")
+                  - date = record.date.toISOString().slice(0,10)
+                  div(class="record-name") #{record.name}
+                  div(class="record-date") #{date}
+                div(class="record-amount d-flex col-2 align-items-center flex-row-reverse") #{record.amount}
+              div(class="record-buttons")
+                a(href=`/record/${record.id}/edit`) 修改
+                form(action=`/record/${record.id}/delete?_method=DELETE` method="POST" style="display: inline;")
+                  button(type="submit" class="delete-button btn") 刪除
+          
+        div(class="mt-5")
+          a(href="/record/new" id="create-button") 新增支出
+
+        

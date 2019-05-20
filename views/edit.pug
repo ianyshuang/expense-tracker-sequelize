@@ -1,0 +1,35 @@
+extends template/layout.pug
+
+block content
+  div(class="container mt-5")
+    div(class="row")
+      form(action=`/record/${record.id}?_method=PUT` method="POST" id="create-form" class="col-md-6 col-5 mx-auto")
+        div(class="row mb-5")
+          div(class="col-3") *必填欄位
+          div(class="col-9 text-center" style="font-size: 22px;") 請修改你的支出
+        div(class="row input-field mb-5")
+          div(class="col-3 field-name") 名稱*
+          div(class="col-9 text-center")
+            input(type="text" name="name" value=`${record.name}` required) 
+        div(class="row input-field mb-5")
+          div(class="col-3 field-name") 日期*
+          div(class="col-9 text-center")
+            input(type="date" name="date" value=`${record.date.toISOString().slice(0,10)}` required) 
+        div(class="row input-field mb-5")
+          div(class="col-3 field-name") 類別*
+          div(class="col-9 text-center")
+            select(name="category" required)
+              option(value="" disabled) Select
+              - const kindList = ['家居物業', '交通出行', '休閒娛樂', '餐飲食品', '其他']
+              for kind, index in kindList
+                if kind == record.category
+                  option(value=`${record.category}` selected) #{record.category}
+                else
+                  option(value=`${kind}`) #{kind}
+        div(class="row input-field mb-5")
+          div(class="col-3 field-name") 金額*
+          div(class="col-9 text-center")
+            input(type="text" name="amount" required value=`${record.amount}`) 
+        div(class="row justify-content-end")
+          div(class="col-9 text-center")
+            button(type="submit" class="btn") 送出
