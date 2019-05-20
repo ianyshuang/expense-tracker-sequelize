@@ -51,35 +51,35 @@ body {
   transform: scale(1, 1.07)
 }
 
-.record:nth-child(odd) .record-detail {
+.expense:nth-child(odd) .expense-detail {
   background-color: #eee;
 }
 
-.record-detail {
+.expense-detail {
   padding-left: 0;
 }
 
-.record-detail i {
+.expense-detail i {
   position: relative;
   font-size: 36px;
   display: inline-block;
   color: skyblue;
 }
 
-.record-name {
+.expense-name {
   font-size: 20px;
 }
 
-.record-date {
+.expense-date {
   margin-top: 3px;
   font-size: 13px;
 }
 
-.record-amount {
+.expense-amount {
   font-size: 18px;
 }
 
-.record-buttons a {
+.expense-buttons a {
   margin-left: 10px;
   line-height: 70px;
   text-decoration: none;

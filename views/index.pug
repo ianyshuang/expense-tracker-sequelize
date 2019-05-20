@@ -28,32 +28,32 @@ block content
           div(class="col-5 text-center")
             h2(class="amount-title") #{totalAmount}
         
-        div(id="record-panel" class="mt-3")
-          for record in records
-            div(class="record d-flex")
-              div(class="record-detail col-7 py-2 d-flex")
+        div(id="expense-panel" class="mt-3")
+          for expense in expenses
+            div(class="expense d-flex")
+              div(class="expense-detail col-7 py-2 d-flex")
                 div(class="d-flex col-2 align-items-center")
-                  if record.category == '餐飲食品'
+                  if expense.category == '餐飲食品'
                     i(class="fas fa-utensils")
-                  if record.category == '休閒娛樂'
+                  if expense.category == '休閒娛樂'
                     i(class="fas fa-grin-beam")
-                  if record.category == '家居物業'
+                  if expense.category == '家居物業'
                     i(class="fas fa-home")
-                  if record.category == '交通出行'
+                  if expense.category == '交通出行'
                     i(class="fas fa-shuttle-van")
-                  if record.category == '其他'
+                  if expense.category == '其他'
                     i(class="fas fa-pen")
-                div(class="record-info d-flex flex-column col-8")
-                  - date = record.date.toISOString().slice(0,10)
-                  div(class="record-name") #{record.name}
-                  div(class="record-date") #{date}
-                div(class="record-amount d-flex col-2 align-items-center flex-row-reverse") #{record.amount}
-              div(class="record-buttons")
-                a(href=`/record/${record.id}/edit`) 修改
-                form(action=`/record/${record.id}/delete?_method=DELETE` method="POST" style="display: inline;")
+                div(class="expense-info d-flex flex-column col-8")
+                  - date = expense.date.toISOString().slice(0,10)
+                  div(class="expense-name") #{expense.name}
+                  div(class="expense-date") #{date}
+                div(class="expense-amount d-flex col-2 align-items-center flex-row-reverse") #{expense.amount}
+              div(class="expense-buttons")
+                a(href=`/expense/${expense.id}`) 修改
+                form(action=`/expense/${expense.id}?_method=DELETE` method="POST" style="display: inline;")
                   button(type="submit" class="delete-button btn") 刪除
           
         div(class="mt-5")
-          a(href="/record/new" id="create-button") 新增支出
+          a(href="/expense/new" id="create-button") 新增支出
 
         
