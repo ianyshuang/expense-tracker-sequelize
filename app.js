@@ -53,6 +53,5 @@ app.use('/auth', require('./routes/auth'))
 app.use('/filter', require('./routes/filter'))
 
 app.listen(port, () => {
-  db.sequelize.sync({ force: true }) // 同步資料庫
   console.log(`Express server is listening on http://localhost:${port}`)
 })
