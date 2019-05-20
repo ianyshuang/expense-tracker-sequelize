@@ -17,9 +17,16 @@ router.get('/login', (req, res) => {
 })
 
 router.post('/login', (req, res, next) => {
-  passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/user/login'
+  passport.authenticate('local', (err, user, info) => {
+    if (err) return next(err)
+    if (!user) {
+      req.flash('error_msg', info.message)
+      return res.redirect('/user/login')
+    }
+    req.logIn(user, err => {
+      if (err) return next(err)
+      return res.redirect('/')
+    })
   })(req, res, next)
 })
 
@@ -32,6 +39,7 @@ router.post('/register', (req, res) => {
   User.findOne({ where: { email } })
     .then(user => {
       if (user) {
+        req.flash('error_msg', '此 email 已被註冊過了！')
         res.redirect('/user/register')
       } else {
         bcrypt.genSalt(10)
@@ -51,6 +59,7 @@ router.post('/register', (req, res) => {
 
 router.get('/logout', (req, res) => {
   req.logout()
+  req.flash('success_msg', '你已成功登出！')
   res.redirect('/user/login')
 })
 

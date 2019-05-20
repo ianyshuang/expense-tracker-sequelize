@@ -6,7 +6,7 @@ block content
     div(class="col-md-4 col-3 mx-auto mt-4")
       div(class="card card-body")
         h1(class="text-center mb-3") 註冊帳號
-        //- include include/message.pug
+        include include/message.pug
         form(action="/user/register" method="POST" onsubmit="return checkSubmit()")
           div(class="form-group")
             label(for="name") 姓名
