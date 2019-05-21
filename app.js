@@ -57,7 +57,7 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/home'))
 app.use('/expense', require('./routes/expense'))
 app.use('/user', require('./routes/user'))
-app.use('/auth', require('./routes/auth'))
+app.use('/oauth', require('./routes/oauth'))
 app.use('/filter', require('./routes/filter'))
 
 app.listen(port, () => {

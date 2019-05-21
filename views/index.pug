@@ -50,7 +50,7 @@ block content
                 div(class="expense-amount d-flex col-2 align-items-center flex-row-reverse") #{expense.amount}
               div(class="expense-buttons")
                 a(href=`/expense/${expense.id}`) 修改
-                form(action=`/expense/${expense.id}?_method=DELETE` method="POST" style="display: inline;")
+                form(action=`/expense/${expense.id}?_method=DELETE` method="POST" style="display: inline;" onsubmit="return confirm('確定要刪除嗎？')")
                   button(type="submit" class="delete-button btn") 刪除
           
         div(class="mt-5")
