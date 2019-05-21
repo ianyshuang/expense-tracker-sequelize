@@ -8,14 +8,14 @@ block content
       div(class="col-6 col-md-8" id="main-panel")
         form(class="d-flex flex-row" id="select-bar" action="/filter" method="POST")
           select(class="px-2 py-3 col-3 mr-3" id="select-month" name="month" onchange="form.submit()")
-            option(value="" selected disabled) 月份
+            option(value="" selected) 所有月份
             for month, index in monthList
               if index+1 == monthSelected
                 option(value=`${index+1}` selected) #{month}
               else
                 option(value=`${index+1}`) #{month}
           select(class="px-2 py-3 col-3 mr-3" id="select-category" name="category" onchange="form.submit()")
-            option(value="" selected disabled) 類別
+            option(value="" selected) 所有類別
             for category in categoryList
               if category === categorySelected
                 option(value=`${category}` selected) #{category}

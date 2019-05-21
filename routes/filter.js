@@ -1,22 +1,38 @@
 const express = require('express')
 const router = express.Router()
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
+const db = require('../models')
+const Expense = db.Expense
 
-// router.post('/', (req, res) => {
-//   const month = req.body.month
-//   const category = req.body.category ? req.body.category : { $exists: true }
-//   let totalAmount = 0
-//   Record.find({ userId: req.user._id, category }, (err, records) => {
-//     if (err) return err
-//     if (req.body.month) {
-//       records = records.filter(record => {
-//         return Number(record.date.getMonth()) + 1 === Number(month)
-//       })
-//     }
-//     for (let record of records) {
-//       totalAmount += record.amount
-//     }
-//     res.render('index', { records, totalAmount, monthSelected: req.body.month, categorySelected: req.body.category })
-//   })
-// })
+router.post('/', (req, res) => {
+  const monthSelected = req.body.month
+  const categorySelected = req.body.category
+  Expense.findAll({
+    where: {
+      category: { [Op.like]: `%${categorySelected}%` }
+    }
+  })
+    // 選出指定月份的 expense
+    .then(expenses => {
+      // month 為空字串則回傳全部，否則依月分篩選
+      if (monthSelected !== '') {
+        expenses = expenses.filter(expense => {
+          const month = expense.date.toISOString().slice(5, 7)
+          return Number(month) === Number(monthSelected)
+        })
+      }
+      return expenses
+    })
+    // 算出所有金額，並交給 template
+    .then(expenses => {
+      let totalAmount = 0
+      expenses.forEach(expense => {
+        totalAmount += expense.amount
+      })
+      res.render('index', { expenses, totalAmount, monthSelected, categorySelected })
+    })
+    .catch(err => res.status(422).json(err))
+})
 
 module.exports = router
