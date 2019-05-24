@@ -41,20 +41,19 @@ router.post('/register', (req, res) => {
       if (user) {
         req.flash('error_msg', '此 email 已被註冊過了！')
         res.redirect('/user/register')
-      } else {
-        bcrypt.genSalt(10)
-          .then(salt => bcrypt.hash(password, salt))
-          .then(hash => {
-            return User.create({
-              name,
-              email,
-              password: hash
-            })
-          })
-          .then(user => res.redirect('/'))
-          .catch(err => res.status(422).json(err))
       }
+      return bcrypt.genSalt(10)
     })
+    .then(salt => bcrypt.hash(password, salt))
+    .then(hash => {
+      return User.create({
+        name,
+        email,
+        password: hash
+      })
+    })
+    .then(user => res.redirect('/'))
+    .catch(err => res.status(422).json(err))
 })
 
 router.get('/logout', (req, res) => {

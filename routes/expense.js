@@ -31,11 +31,11 @@ router.get('/:id', authenticated, (req, res) => {
   User.findByPk(req.user.id)
     .then(user => {
       if (!user) return res.error()
-      Expense.findOne({
+      return Expense.findOne({
         where: { id: req.params.id, userId: user.id }
       })
-        .then(expense => res.render('edit', { expense }))
     })
+    .then(expense => res.render('edit', { expense }))
     .catch(err => res.status(422).json(err))
 })
 
@@ -47,18 +47,18 @@ router.put('/:id', authenticated, (req, res) => {
   User.findByPk(req.user.id)
     .then(user => {
       if (!user) return res.error()
-      Expense.findOne({
+      return Expense.findOne({
         where: { id: req.params.id, userId: user.id }
       })
-        .then(expense => {
-          expense.name = name
-          expense.category = category
-          expense.date = date
-          expense.amount = amount
-          return expense.save()
-        })
-        .then(expense => res.redirect('/'))
     })
+    .then(expense => {
+      expense.name = name
+      expense.category = category
+      expense.date = date
+      expense.amount = amount
+      return expense.save()
+    })
+    .then(expense => res.redirect('/'))
     .catch(err => res.status(422).json(err))
 })
 
@@ -67,11 +67,11 @@ router.delete('/:id', authenticated, (req, res) => {
   User.findByPk(req.user.id)
     .then(user => {
       if (!user) return res.error()
-      Expense.destroy({
+      return Expense.destroy({
         where: { id: req.params.id, userId: user.id }
       })
-        .then(expense => res.redirect('/'))
     })
+    .then(expense => res.redirect('/'))
     .catch(err => res.status(422).json(err))
 })
 
