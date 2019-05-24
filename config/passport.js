@@ -21,7 +21,7 @@ module.exports = passport => {
               }
             })
         })
-        .catch(err => res.status(422).json(err))
+        .catch(err => done(err))
     }
   ))
   // 使用 Facebook Strategy
